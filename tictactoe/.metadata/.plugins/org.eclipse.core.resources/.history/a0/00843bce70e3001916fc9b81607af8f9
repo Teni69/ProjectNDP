@@ -1,0 +1,152 @@
+package tictactoepack;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+
+public class StartUp extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField Player1;
+	private JTextField Player2;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					StartUp frame = new StartUp();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public StartUp() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(320, 120, 630, 350);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(128, 128, 128));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		Player1 = new JTextField();
+		Player1.setFont(new Font("Monospaced", Font.BOLD, 21));
+		Player1.setHorizontalAlignment(SwingConstants.CENTER);
+		Player1.setText("TESZTTEXT");
+		Player1.setForeground(new Color(220, 20, 60));
+		Player1.setBackground(new Color(255, 250, 240));
+		Player1.setBounds(457, 110, 150, 30);
+		contentPane.add(Player1);
+		Player1.setColumns(10);
+		
+		Player2 = new JTextField();
+		Player2.setText("TESZTTEXT");
+		Player2.setFont(new Font("Monospaced", Font.BOLD, 21));
+		Player2.setForeground(new Color(30, 144, 255));
+		Player2.setHorizontalAlignment(SwingConstants.CENTER);
+		Player2.setBackground(new Color(255, 250, 240));
+		Player2.setBounds(457, 160, 150, 30);
+		contentPane.add(Player2);
+		Player2.setColumns(10);
+		
+		JButton btnNewButton = new JButton("START");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TicTacToe nw = new TicTacToe();
+				nw.jatekkezdes();
+			}
+		});
+		btnNewButton.setBackground(UIManager.getColor("Button.darkShadow"));
+		btnNewButton.setForeground(new Color(0, 0, 128));
+		btnNewButton.setFont(new Font("MV Boli", Font.PLAIN, 26));
+		btnNewButton.setBounds(487, 226, 120, 35);
+		contentPane.add(btnNewButton);
+		
+		JLabel lblPlayer = new JLabel("PLAYER 1:");
+		lblPlayer.setForeground(new Color(220, 20, 60));
+		lblPlayer.setFont(new Font("SimSun", Font.BOLD, 19));
+		lblPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPlayer.setBounds(337, 112, 110, 30);
+		contentPane.add(lblPlayer);
+		
+		JLabel lblNewLabel = new JLabel("PLAYER 2:");
+		lblNewLabel.setForeground(new Color(100, 149, 237));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("SimSun", Font.BOLD, 19));
+		lblNewLabel.setBounds(337, 162, 110, 30);
+		contentPane.add(lblNewLabel);
+		
+		JLabel lblTictactoe = new JLabel("TICTACTOE");
+		lblTictactoe.setBackground(UIManager.getColor("Button.disabledForeground"));
+		lblTictactoe.setForeground(new Color(139, 0, 0));
+		lblTictactoe.setFont(new Font("MS Gothic", lblTictactoe.getFont().getStyle() | Font.BOLD, lblTictactoe.getFont().getSize() + 20));
+		lblTictactoe.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTictactoe.setBounds(407, 11, 200, 79);
+		contentPane.add(lblTictactoe);
+		
+		JLabel label = new JLabel("");
+		label.setIcon(new ImageIcon(StartUp.class.getResource("/Image/icon.png")));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setBounds(10, 129, 210, 210);
+		contentPane.add(label);
+		
+		JButton btnExit = new JButton("EXIT");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnExit.setBackground(UIManager.getColor("Button.darkShadow"));
+		btnExit.setForeground(new Color(0, 0, 128));
+		btnExit.setFont(new Font("MV Boli", Font.PLAIN, 26));
+		btnExit.setBounds(311, 226, 120, 35);
+		contentPane.add(btnExit);
+		
+		JLabel label_1 = new JLabel("");
+		label_1.setBackground(new Color(70, 130, 180));
+		label_1.setIcon(new ImageIcon(StartUp.class.getResource("/Image/Welcome.png")));
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		label_1.setBounds(0, 11, 270, 107);
+		contentPane.add(label_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setIcon(new ImageIcon(StartUp.class.getResource("/Image/Player1.png")));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(311, 110, 35, 35);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel label_2 = new JLabel("");
+		label_2.setIcon(new ImageIcon(StartUp.class.getResource("/Image/Player2.png")));
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		label_2.setBounds(311, 160, 35, 30);
+		contentPane.add(label_2);
+		
+		JLabel label_3 = new JLabel("");
+		label_3.setIcon(new ImageIcon(StartUp.class.getResource("/Image/haveFun.jpg")));
+		label_3.setBounds(280, 129, 286, 210);
+		contentPane.add(label_3);
+		
+		setUndecorated(true); //Keret eltüntetése
+	}
+} 

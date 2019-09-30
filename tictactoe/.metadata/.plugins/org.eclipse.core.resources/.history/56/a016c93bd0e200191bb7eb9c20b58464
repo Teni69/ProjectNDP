@@ -1,0 +1,152 @@
+package LoginSys;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.LineBorder;
+
+ //JFrame a tábla keretbefoglalására
+public class TicTacToeFrame extends JFrame {
+	
+	private boolean gameOver=false;
+	
+	//Ez kellett mert nélküle sírt a program(alt+enter)
+	private static final long serialVersionUID = 1L;
+
+	//jelzi ki következik soron
+	private char whoseTurn ='X';
+	
+	//keret
+	private Cell[][] cells = new Cell[3][3];
+	
+	//státusz
+	JLabel labelStatus= new JLabel("X's turn.");
+	
+	//tábla szerkezete
+	public TicTacToeFrame() {
+		JPanel panel= new JPanel(new GridLayout(3,3,0,0));
+		for(int i = 0; i < 3; i++)
+			for(int j =0; j< 3; j++)
+				panel.add(cells[i][j] = new Cell());
+		//a rácsok keretének színe
+			panel.setBorder(new LineBorder(Color.blue, 3));
+		//a label keretének színe
+			labelStatus.setBorder(new LineBorder(Color.green,3));
+	
+			add(panel, BorderLayout.CENTER);
+			add(labelStatus,BorderLayout.SOUTH);
+	
+	}
+	//a tábla televan-e
+	public boolean isFull() {
+		for(int i = 0; i < 3; i++) 
+			for(int j =0; j< 3; j++) 
+				if(cells[i][j].getToken()==' ')
+						return false;
+				
+		return true;
+	}
+	
+	//van-e nyertes
+	public boolean isWon(char token) {
+		//sor ellenőrzése
+		for(int i = 0; i < 3; i++)
+			if ((cells[i][0].getToken() == token)
+				&& (cells[i][1].getToken() == token)
+				&& (cells[i][2].getToken() == token)
+				) return true;
+		
+		//oszlop ellenőrzése
+		for(int i = 0; i < 3; i++)
+			if ((cells[0][i].getToken() == token)
+				&& (cells[1][i].getToken() == token)
+				&& (cells[2][i].getToken() == token)
+				) return true;
+		
+		//átlós ellenőrzések
+			if ((cells[0][0].getToken() == token)
+				&& (cells[1][1].getToken() == token)
+				&& (cells[2][2].getToken() == token)
+				) return true;
+			
+			if ((cells[0][2].getToken() == token)
+				&& (cells[1][1].getToken() == token)
+				&& (cells[2][0].getToken() == token)
+				) return true;
+			
+			return false;
+	}
+
+	//cellákkal operál, rajzol, vizsgál ki nyert
+	public class Cell extends JPanel{
+	
+		private static final long serialVersionUID = 1L;
+	//token
+		private char token = ' ';
+		
+		public Cell() {
+			setBorder (new LineBorder(Color.black,1));
+			addMouseListener(new MyMouseListener());
+		}
+		
+		//kéri a tokent a cellából
+		public char getToken() {
+			return token;
+		}
+		
+		//beállítja a tokent
+		public void  setToken(char c) {
+			token = c;
+			repaint();
+		}
+		//rajzolgat
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			//x kirajzolása vonalanként!!!
+			if(token =='X') {
+				g.setColor(Color.magenta);
+				g.drawLine(10,10,getWidth() - 10, getHeight() - 10);
+				g.drawLine(getWidth() - 10, 10, 10, getHeight() - 10);
+			}
+			
+			//kör kirajzolása
+			else if(token == 'O') {
+				g.setColor(Color.red);
+				g.drawOval(10, 10, getWidth()- 20, getHeight() - 20);
+			}
+		}
+		//elmondja a lenti labeé-ben hogy ki nyert, vagy ha még megy a játék hogy ki következik
+		//plusz ha a játkak vége nem engedi tovább rajzolni a jeleket.
+		private class MyMouseListener extends MouseAdapter{
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if(gameOver)
+					return;
+				else {
+				
+					if(token==' ' && whoseTurn!=' ')
+						setToken(whoseTurn);
+				
+					if(isWon(whoseTurn)) {
+						labelStatus.setText(whoseTurn + " won! Game over!");
+						whoseTurn = ' ';
+						gameOver=true;
+					
+					}
+					else if (isFull()) {
+						labelStatus.setText("Tie game! Game over!");
+						whoseTurn = ' ';
+						gameOver=true;
+					}
+					else {
+						whoseTurn =(whoseTurn =='X')?'O':'X';
+						labelStatus.setText(whoseTurn + "'s turn.");
+					}
+				}
+			}//end override of class MyMouseListener
+		}//end class MyMouseListener
+	}//end class Cell
+}//end class TicTacToeFrame
+	
